@@ -1,0 +1,24 @@
+engines:
+  tslint:
+      enabled: true
+      channel: beta
+      config: tslint.json
+  duplication:
+    enabled: true
+    config:
+      languages:
+      - typescript
+
+exclude_paths:
+  - node_modules/
+  - Gruntfile.js
+
+ratings:
+   paths:
+      - "src/**/*.tsx"
+      - "src/**/*.ts"
+      - "src/**/*.scss"
+
+checks:
+  method-lines:
+    enabled: false
