@@ -4,9 +4,10 @@ import * as express from 'express';
 import * as logger from 'morgan';
 import * as path from 'path';
 
-import errorHandler = require('errorhandler');
-import methodOverride = require('method-override');
+import errorHandler from 'errorhandler';
+import methodOverride from 'method-override';
 
+import dbConfig from './dbConfig';
 import serverRoutes from './routes/index';
 
 /**
@@ -67,12 +68,11 @@ export class Server {
    * @method config
    */
   public config() {
+    // connect database
+    dbConfig();
+    
     // add static paths
     this.app.use(express.static(path.join(__dirname, 'public')));
-
-    // configure pug
-    // this.app.set('views', path.join(__dirname, 'views'));
-    // this.app.set('view engine', 'pug');
 
     // use logger middlware
     this.app.use(logger('dev'));
@@ -86,7 +86,7 @@ export class Server {
     }));
 
     // use cookie parser middleware
-    this.app.use(cookieParser('SECRET_GOES_HERE'));
+    this.app.use(cookieParser(process.env.SECRET));
 
     // use override middlware
     this.app.use(methodOverride());
